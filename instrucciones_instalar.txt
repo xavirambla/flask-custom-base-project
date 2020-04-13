@@ -1,0 +1,24 @@
+En carpeta del proyecto ejecutar   pip3 install -r requirements.txt
+set FLASK_APP=application.py
+set DATABASE_URL=postgres://baxexxxxxxyrfw:dc5671164332778daab52870994d4fx5xx4x4325bxxx6ce6b5fdeba37183cab5@ec1-53-217-79-471.eu-west-1.compute.amazonaws.com:5432/d7xxxxx9k8qbtf
+
+(problemas con la librería de hashing)
+pip3 uninstall Werkzeug
+pip3 install Werkzeug ==0.16.0
+
+pip install -U Flask-SQLAlchemy
+flask run	(Start web)
+
+(Crear bd en internet)
+www.heroku.com
+create app
+add-ons  -> heroku postgress
+
+PAra administrar la base de datos puedes usar:
+adminer.cs50.net
+
+
+pip install selenium  (test javascript)
+
+
+https://sites.google.com/a/chromium.org/chromedriver/home  (instalar el webdriver)
