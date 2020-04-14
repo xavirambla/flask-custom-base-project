@@ -125,6 +125,7 @@ def changePassword():
         else:
             try:
                 user.changePassword(old_password,new_password)
+                db.session.merge(user) # esta operación es la encargada de realizar el update
                 db.session.commit()
                 return render_template("index.html",message = "Password change it", user =user ) 
             except Exception as error:   
