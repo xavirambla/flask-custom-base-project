@@ -22,7 +22,7 @@ __test__={
 #app.app_context().push() 
 
 #__time_between_pages__ = 5 # define el tiempo entre solicitar una web y visitarla
-__time_between_pages__ = 2 # define el tiempo entre solicitar una web y visitarla
+__time_between_pages__ = 8 # define el tiempo entre solicitar una web y visitarla
 
 #-----------------
 def getDriverForBrowser(browser):
@@ -59,7 +59,7 @@ class User_TestCase (unittest.TestCase):
         # creates a test client
             self.app = app.test_client()
         # propagate the exceptions to the test client
-            self.app.testing = True 
+            self.app.testing = False
             self.driver = getDriverForBrowser(__browser__)
 
             self.server_url  = "http://127.0.0.1:5000"
@@ -238,6 +238,7 @@ class User_TestCase (unittest.TestCase):
     @unittest.skipIf( not  (__test__["run_all"]  or   __test__["run_JavascriptMethods"] )  ,   
                      "not required http methods in this test")
     def test_RegisterChangePasswordAndLoginOldPasswordButton(self):
+        print("-- test_RegisterChangePasswordAndLoginOldPasswordButton --")
         user  = "test99"
         passw =  "aaaA1_."
 
@@ -265,9 +266,10 @@ class User_TestCase (unittest.TestCase):
         #logout 
         logout_action(self)
         login_action(self,user, passw )
-
-        titulo = driver.find_element_by_xpath(("//h1[@class='alert alert-primary']"))
+        
         error = driver.find_element_by_xpath("//h5[@class='alert alert-danger']")
+        titulo = driver.find_element_by_xpath(("//h1[@class='alert alert-primary']"))
+
         self.assertIsNotNone(titulo)
         self.assertIsNotNone(error)
 
@@ -278,10 +280,10 @@ class User_TestCase (unittest.TestCase):
 
 
 
-
     @unittest.skipIf( not  (__test__["run_all"]  or   __test__["run_JavascriptMethods"] )  ,   
                      "not required http methods in this test")
     def test_RegisterChangePasswordAndLoginNewPasswordButton(self):
+        print("-- test_RegisterChangePasswordAndLoginNewPasswordButton --")
         user  = "test99"
         passw =  "aaaA1_."
 
@@ -311,6 +313,8 @@ class User_TestCase (unittest.TestCase):
         logout_action(self)
         login_action(self,user, passw+"new" )
         # Inside
+        html_source = driver.page_source
+        
         mainContent = driver.find_element_by_id("MainContent")
         self.assertEqual(  mainContent.text , f"Hello {user}!!!"  )
 

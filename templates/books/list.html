@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <h1  class="alert alert-primary" role="alert">List of Books</h1>
+    <BR/>
+    
+    {% if lista|length  %}
+        <ul>
+            {% for row in lista %}
+            <li><a href="books/{{row['id']}}" >{{row["title"]}} ({{row["isbn"]}} {{row["author"]}})</a></li>                    
+            
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h5>No books in database</h5>
+    {% endif %}
+
+
+    <BR/>
+    {% if error %}
+    <h5  class="alert alert-danger" role="alert">{{error}}</h5>
+    {% endif %}
+{% endblock %}
+

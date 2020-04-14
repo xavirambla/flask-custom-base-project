@@ -1,17 +1,16 @@
 import unittest
 
 from models.User import User
+
 from database import db
 from application import app
 from selenium import webdriver
 from flask import url_for
 
 
-
-
 __test__={            
             "run_all" : True,  # run all tests             
-              "run_class": True,  # run class test
+              "run_class": False,  # run class test
                 "run_httpModel" : False,   # run httpModel test 
                 "run_httpMethods" : False,  # run httpMethods test        
             }
@@ -29,7 +28,7 @@ __test__={
 
 
 
-@unittest.skipIf( not  (__test__["run_all"]  or   __test__["run_class"] )  ,
+@unittest.skipIf( not  (__test__["run_all"]  or  __test__["run_class"] )  ,
                      "not required check Models in this test")
 class User_TestCase (unittest.TestCase):
     def setUp(self):
@@ -222,9 +221,12 @@ class User_TestCase (unittest.TestCase):
     def test_changePassword(self):
         try:
             user = User.authenticate(username ="test5" , password="aaaA1_.")
+            old_hash= user.hash
             user.changePassword("aaaA1_.","bbbB2_.")
+            db.session.merge(user)
             db.session.commit();
-            pass
+            user2 = User.query.get(user.id)
+            self.assertFalse(old_hash ==user2.hash)            
         except Exception as error:
              self.fail(str(error))
 
@@ -234,6 +236,7 @@ class User_TestCase (unittest.TestCase):
         try:
             user = User.authenticate(username ="test5" , password="aaaA1_.")
             user.changePassword("cccA1_.","bbbB2_.")
+            db.session.merge(user)
             db.session.commit();
             self.fail("Error - Password antigo es incorrecto y debería haber fallado")
         except Exception as error:
@@ -246,6 +249,7 @@ class User_TestCase (unittest.TestCase):
         try:
             user = User.authenticate(username ="test5" , password="aaaA1_.")
             user.changePassword("aaaA1_.","111111")
+            db.session.merge(user)
             db.session.commit();
             self.fail("Error - Password nuevo es incorrecto y debería haber fallado")
         except Exception as error:
@@ -257,6 +261,7 @@ class User_TestCase (unittest.TestCase):
         try:
             user = User.authenticate(username ="test5" , password="aaaA1_.")
             user.changePassword("aaaA1_.","bbbB2_.")
+            db.session.merge(user)
             db.session.commit();
 
             user2 = User.authenticate(username ="test5" , password="bbbB2_.")
@@ -272,6 +277,7 @@ class User_TestCase (unittest.TestCase):
         try:
             user = User.authenticate(username ="test5" , password="aaaA1_.")
             user.changePassword("aaaA1_.","bbbB2_.")
+            db.session.merge(user)
             db.session.commit();
 
             user2 = User.authenticate(username ="test5" , password="aaaA1_.")

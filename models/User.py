@@ -6,7 +6,7 @@ from datetime import datetime as dt
 class User (db.Model):
     __tablename="users"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String,unique=True, nullable=False)
     hash = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime())
     active = db.Column(db.Boolean(), nullable=False)

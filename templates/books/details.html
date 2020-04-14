@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+    <h1  class="alert alert-primary" role="alert">Details </h1>    
+    <BR/>
+    {% if book %}
+        <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" name="isbn" value="{{book.isbn}}" readonly><br><br>
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{book.title}}" readonly><br><br>
+        </div>
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author"  value="{{book.author}}" readonly><br><br>
+        </div>
+        <div class="form-group">
+            <label for="author">publication year:</label>
+            <input type="text" id="year" name="year"  value="{{book.year}}" readonly><br><br>
+        </div>
+        <BR/>
+        <h3>Insert a Review</h3>
+        <form id="review_form" action="/review" method="post">
+            <textarea name="Text1" cols="40" rows="5"></textarea>
+            <input type="hidden" id="id" name="id"  value="{{book.id}}" readonly>
+            <button class="btn btn-primary" type="submit">Insert Review</button>
+        </form>
+    {% else %}
+    <BR/>    
+    <h5  class="alert alert-danger" role="alert">Record Not Found</h5>
+    {% endif %}
+{% endblock %}
+
